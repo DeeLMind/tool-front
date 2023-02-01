@@ -51,14 +51,14 @@
         </el-col>
       </el-row>
 
-      <el-row v-if="checkPermission(['guest'])" :gutter="20" class="row">
+      <!-- <el-row v-if="checkPermission(['guest'])" :gutter="20" class="row">
         <el-col :span="10">
           <el-button type="green-el-button" @click="register">注册</el-button>
         </el-col>
         <el-col :span="10">
           <el-button type="green-el-button" @click="login">登录</el-button>
         </el-col>
-      </el-row>
+      </el-row> -->
     </div>
   </div>
 </template>
@@ -68,7 +68,6 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import checkPermission from '@/utils/permission'
-import Search from './Search'
 import { packMouse } from '@/utils/mouse'
 
 var proto = require('~/proto.js')
@@ -76,9 +75,7 @@ var proto = require('~/proto.js')
 export default {
   components: {
     Breadcrumb,
-    Hamburger,
-    Search
-    // Screenfull
+    Hamburger
   },
   data() {
     return {

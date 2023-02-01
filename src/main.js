@@ -37,18 +37,6 @@ import vueAwesomeCountdown from 'vue-awesome-countdown'
 
 Vue.use(Autocomplete)
 
-import * as fundebug from 'fundebug-javascript'
-import FundebugVue from 'fundebug-vue'
-fundebug.apikey = 'a19c8aa90e1d42b1cbee7bc6c546a512701227568b72554c72b71f246da0320f'
-new FundebugVue(fundebug).installVueErrorHandler(Vue) // Vue 2.x
-require('fundebug-revideo')
-
-// 测试mock数据
-if (process.env.NODE_ENV === 'mock') {
-  // console.log('开启Mock拦截')
-  require('../mock/mock')
-}
-
 Vue.use(Element, {
   size: localStorage.getItem('size') || 'medium' // set element-ui default size
   // locale: enLang // 如果使用中文，无需设置，请删除
@@ -71,13 +59,6 @@ Vue.config.errorHandler = function(err, vm, info) {
     duration: 2 * 1000
   })
 }
-
-// Vue.config.warnHandler = function(msg, vm, trace) {
-//   Message({
-//     message: msg,
-//     type: 'warn',
-//     duration: 2 * 1000
-//   })
 
 new Vue({
   el: '#app',

@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+// 一定要加，避免编译错误
+option go_package = "/proto";
+
+package cve;
+
+message CveGetTopicInfo {
+    string type = 1;    // cve类型
+}
+
+message CveGetOneTopicInfo{
+    string id = 1;
+}

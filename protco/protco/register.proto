@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+// 一定要加，避免编译错误
+option go_package = "/proto";
+
+package register;
+
+message RegisterUserInfo{
+  string username = 1;
+  string password = 2;
+  string email = 3;
+  string email_code = 4;   //邮箱验证码
+  string image_code = 5;   //图片验证码
+  string image_id = 6;     //图片验证码id
+  string mouse = 7;
+}

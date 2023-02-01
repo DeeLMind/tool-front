@@ -1,0 +1,564 @@
+@import "./variables.scss";
+
+//输入框div样式
+.input-group{
+    position: relative;
+    padding: 25px;
+}
+
+//文本框div样式
+.textarea-group{
+    position: relative;
+    width: 100%;
+    padding: 25px;
+}
+  
+.textarea-group-part{
+    position: relative;
+    width: 50%;
+    display: inline-block;
+    padding-right: 20px;
+}
+
+//textarea基本样式
+.base-textarea{
+    resize: none;
+    width:100%;
+    background: transparent;
+    border-radius: 5px;
+    border: 1px solid rgba($geekColor,0.1);
+    outline: none;
+    color: $fontColor;
+    font-family: "Microsoft YaHei";
+    overflow-x:hidden;
+    padding-top: 10px;
+}
+
+//span基本样式
+.base-span{
+    color: $geekColor;
+    padding-right: 20px;
+    font-family: "Microsoft YaHei";
+    text-transform: uppercase;
+}
+
+//单选框div样式
+.radio-group{
+    position: relative;
+    display: inline-block;
+    padding-left: 25px;
+}
+
+.base-label{
+    color: $geekSecondaryColor;
+    padding-right: 10px;
+    font-family: "Microsoft YaHei";
+}
+
+// feat(QKSword)提示label字体
+.tip-label{
+    color: $tipColor;
+    padding-right: 10px;
+    font-family: "Microsoft YaHei";
+}
+
+//number输入基本样式
+.base-input[type="checkbox"]{
+    color:red;
+    width: 20px;
+    height: 16px;
+    border-radius: 5px;
+
+}
+
+.hashitem-para-group{
+    display: inline-block;
+    padding-right: 15px;
+}
+  
+.textarea-group-input-text{
+    width: 150px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid rgba($geekColor,0.1);
+    color: $geekSecondaryColor;
+    background-color: $inputColor;
+}
+
+// el-button 绿色主题
+::v-deep.el-button--green-el-button,
+::v-deep.el-button--green-el-button:focus,
+::v-deep.el-button--green-el-button:hover{
+  font-family: "Microsoft YaHei";
+  color: $mainColor;
+  background-color: $geekColor;
+  border-color: $geekColor;
+  font-size: 14px;
+}
+
+::v-deep.el-button--green-el-button:active{
+  font-family: "Microsoft YaHei";
+  color: $mainColor;
+  background-color: $geekColor;
+  border-color: $mainColor;
+}
+
+//el-button 灰色主题
+::v-deep.el-button--gray-el-button:hover,  // 悬浮不点击
+::v-deep.el-button--gray-el-button:focus,  //抬起或移开鼠标
+::v-deep.el-button--gray-el-button{
+  color: $geekSecondaryColor;
+  background-color: $inputColor;
+  border-color: #555555;
+  font-family: "Microsoft YaHei";
+  font-size: 14px;
+}
+
+::v-deep.el-button--gray-el-button:active // 按下鼠标
+{  
+  color: $geekColor;
+  background-color: $inputColor;
+  border-color: $geekColor;
+  font-family: "Microsoft YaHei";
+}
+
+//el-button 蓝色主题
+::v-deep.el-button--blue-el-button:hover,  // 悬浮不点击
+::v-deep.el-button--blue-el-button:focus,  //抬起或移开鼠标
+::v-deep.el-button--blue-el-button{
+  color: $geekSecondaryColor;
+  background-color: #44538f;
+  border-color: #44538f;
+  font-family: "Microsoft YaHei";
+  font-size: 14px;
+}
+
+::v-deep.el-button--blue-el-button:active // 按下鼠标
+{  
+  color: $geekSecondaryColor;
+  background-color: #44538f;
+  border-color: $mainColor;
+  font-family: "Microsoft YaHei";
+}
+
+// el-radio自定义样式
+.dark-el-radio{
+    ::v-deep.el-radio__inner{
+        width: 17px;
+        height: 17px;
+    }
+
+    ::v-deep.el-radio__inner::after{
+        width: 6px;
+        height: 6px;
+    }
+
+    ::v-deep.el-radio__input.is-checked .el-radio__inner{
+        background-color:#3498DB;
+        border-color: #3498DB;
+    }
+
+    ::v-deep.el-radio__label{
+        color: $fontColor;
+    }
+
+    ::v-deep.el-radio__input.is-checked + .el-radio__label{
+        color: $fontColor;
+    }
+}
+
+// el-checkbox自定义样式
+.dark-el-checkbox{
+    ::v-deep.el-checkbox__inner{
+        width: 17px;
+        height: 17px;
+        border-radius: 50px;
+    }
+  
+    ::v-deep.el-checkbox__inner::after{
+        height: 11px;
+        left: 6px;
+    }
+  
+    ::v-deep.el-checkbox__inner:hover,
+    ::v-deep.el-checkbox__inner:active{
+        border-color:$geekColor;
+    }
+
+    ::v-deep.el-checkbox__input.is-focus .el-checkbox__inner{
+        border-color:$geekColor;
+    }
+
+    ::v-deep.el-checkbox__input.is-checked .el-checkbox__inner{
+        background-color: $orangeColor;
+        border-color: $orangeColor;
+    }
+  
+    ::v-deep.el-checkbox__label{
+        color: $fontColor;
+    }
+  
+    ::v-deep.el-checkbox__input.is-checked + .el-checkbox__label{
+        color: $fontColor;
+    }
+}
+
+// el-input-number自定义样式
+.dark-el-input-number{
+    width: 80px;
+
+    ::v-deep.el-input__inner{
+        color: $selectFontColor;
+        background-color: $selectColor;
+        border-color: $selectColor;
+        font-family: "Microsoft YaHei";
+        font-size: 14px;
+    }
+
+    ::v-deep.el-input-number__increase:hover:not(.is-disabled) ~ .el-input .el-input__inner:not(.is-disabled),
+    ::v-deep.el-input-number__decrease:hover:not(.is-disabled) ~ .el-input .el-input__inner:not(.is-disabled){
+        border-color: $geekColor;
+    }
+
+    ::v-deep.el-input__inner {
+        padding-left: 5px;
+        padding-right: 35px;
+    }
+
+    ::v-deep.el-input-number__increase{
+        color: $selectFontColor;
+        background-color: $selectColor;
+        border-color: $selectColor;
+        font-family: "Microsoft YaHei";
+        border-bottom: $selectColor;
+    }
+
+    ::v-deep.el-input-number__decrease{
+        color: $selectFontColor;
+        background-color: $selectColor;
+        border-color: $selectColor;
+        font-family: "Microsoft YaHei";
+        border-bottom: $selectColor;
+    }
+}
+
+
+// el-select自定义样式
+.dark-el-select{
+    width: 125px;
+
+    ::v-deep.el-input--small .el-input__inner{
+        color: $selectFontColor;
+        background-color: $selectColor;
+        border-color: $selectColor;
+        font-family: "Microsoft YaHei";
+        font-size: 14px;
+    }
+
+    ::v-deep.el-input.is-focus .el-input__inner{
+        border-color: $geekColor;
+    }
+
+    ::v-deep.el-select-dropdown{
+        color: $selectFontColor;
+        background-color: $mainColor;
+        border-color: $geekColor;
+        font-family: "Microsoft YaHei";
+    }
+
+    ::v-deep.el-select-dropdown__item.hover{
+        color: $mainColor;
+        background-color: $geekColor;
+    }
+
+    ::v-deep.el-select-dropdown__item.selected{
+        color: white;
+    }
+}
+
+// el-select多选样式
+.dark-el-select-multiple{
+    @extend .dark-el-select;
+  
+    ::v-deep.el-select-dropdown.is-multiple .el-select-dropdown__item.selected,
+    ::v-deep.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover{
+      color: white;
+      background-color: transparent;
+    }
+  
+    ::v-deep.el-tag.el-tag--info{
+      color: white;
+      border-color: $geekColor;
+      background-color: transparent;
+    }
+  
+    ::v-deep.el-tag__close.el-icon-close::before{
+      color: white;
+      background-color: $selectColor;
+    }
+  }
+
+// el-input基础样式
+.dark-el-input{
+    ::v-deep.el-input__inner{
+        width: 100%;
+        background-color: transparent;
+        border-color: transparent;
+        color: $fontColor;
+        font-family: "Microsoft YaHei";
+        font-size: 14px;
+    }
+
+    ::v-deep.el-input__inner:focus,
+    ::v-deep.el-input__inner:active,
+    ::v-deep.el-input__inner:hover{
+        width: 100%;
+        background-color: transparent;
+        border-color: $geekColor;
+        color: $fontColor;
+        font-family: "Microsoft YaHei";
+    }
+}
+
+.dark-para-el-input{
+    ::v-deep.el-input__inner{
+        width: 120px;
+        padding: 5px;
+        border-color: transparent;
+        font-family: "Microsoft YaHei";
+        color: $geekSecondaryColor;
+        background-color: $inputColor;
+        font-size: 14px;
+    }
+
+    ::v-deep.el-input__inner:focus,
+    ::v-deep.el-input__inner:active,
+    ::v-deep.el-input__inner:hover{
+        width: 120px;
+        background-color: $inputColor;
+        border-color: $geekColor;
+        color: $geekSecondaryColor;
+    }
+}
+
+// el-card样式
+.dark-el-card{
+    background-color: $mainColor;
+    border-color: transparent;
+
+    ::v-deep.el-card__header{
+      border-bottom:1px solid $geekColor;
+    }
+
+    // ::v-deep.el-card__body{
+    // }
+}
+
+// el-table样式
+.dark-el-table{
+    // 排序图标样式
+    ::v-deep.descending .sort-caret.descending{
+      border-top-color:$orangeColor;
+    }
+  
+    ::v-deep.ascending  .sort-caret.ascending{
+      border-bottom-color:$orangeColor;
+    }
+  
+    // 多选框样式
+    ::v-deep.el-checkbox__inner{
+      background-color: transparent;
+      border-color: #747474;
+    }
+  
+    ::v-deep.el-checkbox__inner:hover,
+    ::v-deep.el-checkbox__inner:active{
+        border-color:$geekColor;
+    }
+  
+    ::v-deep.el-checkbox__input.is-checked .el-checkbox__inner{
+        background-color: $orangeColor;
+        border-color: $orangeColor;
+    }
+  
+    ::v-deep.el-checkbox__label{
+        color: $fontColor;
+    }
+  
+    ::v-deep.el-checkbox__input.is-checked + .el-checkbox__label{
+        color: $fontColor;
+    }
+
+    // feat(QKSword):el-table没有数据时的样式
+    ::v-deep.el-table__empty-block{
+        min-height: 100px;
+        background-color: $selectColor;
+    }
+
+    // feat(QKSword):el-table没有数据时显示text的样式
+    ::v-deep.el-table__empty-text{
+        color: #FFFFFF;
+    }
+
+}
+
+// feat(QKSword):el-table结尾处线条样式
+.dark-el-table::before{
+    background-color: $selectColor;
+}
+
+  // 分页选择样式
+.dark-el-pagination{
+    ::v-deep.el-pagination__jump{
+        color: #FFFFFF;
+    }
+
+    ::v-deep.el-input__inner:focus,
+    ::v-deep.el-input__inner:hover{
+        background-color: $selectColor;
+        border-color: $geekColor;
+    }
+
+    ::v-deep.el-input__inner{
+        background-color: $selectColor;
+        border-color: $selectColor;
+        font-family: "Microsoft YaHei";
+        color: $fontColor;
+    }
+
+    ::v-deep.el-input.is-focus .el-input__inner{
+        border-color: $geekColor;
+    }
+}
+  
+//选中页样式
+::v-deep.dark-el-pagination.is-background .el-pager li:not(.disabled).active{
+    background-color: $geekColor;
+    color: $mainColor;
+}
+//普通页样式
+::v-deep.dark-el-pagination.is-background .el-pager li{
+    background-color: $selectColor;
+    color: $fontColor;
+}
+
+::v-deep.dark-el-pagination.is-background .el-pager li:hover{
+color: $geekColor;
+}
+
+::v-deep.dark-el-pagination.is-background .btn-next{
+    background-color: $selectColor;
+    color: $fontColor;
+}
+
+::v-deep.dark-el-pagination.is-background .btn-next:hover{
+    background-color: $geekColor;
+    color: $mainColor;
+}
+
+::v-deep.dark-el-pagination.is-background .btn-prev{
+    background-color: $selectColor;
+    color: $fontColor;
+}
+
+::v-deep.dark-el-pagination.is-background .btn-prev:hover{
+    background-color: $geekColor;
+    color: $mainColor;
+}
+
+// el-descriptions描述列表样式
+.dark-el-descriptions{
+    ::v-deep.el-descriptions__header{
+      background-color: $mainColor;
+      color: $orangeColor;
+    }
+  
+    ::v-deep.el-descriptions__body{
+      background-color: $mainColor;
+      color: $fontColor;
+      font-family: "Microsoft YaHei";
+      font-size: 14px;
+    }
+}
+
+// el-form基础样式
+.dark-el-form-item{
+    ::v-deep.el-form-item__label{
+      float: left;
+      color: $fontColor;
+      font-family: "Microsoft YaHei";
+      font-size: 14px;
+    }
+  
+    ::v-deep.el-input__inner{
+        width: 100%;
+        padding: 5px;
+        border-color: transparent;
+        font-family: "Microsoft YaHei";
+        color: $geekSecondaryColor;
+        background-color: $inputColor;
+        font-size: 14px;
+    }
+}
+
+// el-tabs基础样式
+.dark-el-tabs{
+    ::v-deep.el-tabs__item{
+        color: $orangeColor;
+        font-family: "Microsoft YaHei";
+        font-size: 16px;
+    }
+
+    ::v-deep.el-tabs__nav-wrap::after {
+        background-color: transparent;
+    }
+
+    ::v-deep.el-tabs__active-bar{
+        background-color: $orangeColor;
+    }
+}
+
+// el-dialog对话框样式
+.dark-el-dialog{
+    ::v-deep.el-dialog__title{
+        color:white;
+    }
+
+    ::v-deep.el-dialog__header{
+        background-color:$mainColor;
+        border-bottom:1px solid $geekColor;
+    }
+
+    ::v-deep.el-dialog__body{
+        background-color:$mainColor;
+    }
+}
+
+// feat(QKSword):对话框输入框样式
+.dialogInput-el-input{
+
+    ::v-deep.el-input__inner{
+        padding: 5px;
+        border-color: transparent;
+        font-family: "Microsoft YaHei";
+        color: $geekSecondaryColor;
+        background-color: $inputColor;
+        font-size: 14px;
+    }
+
+    ::v-deep.el-input-group__prepend{
+        color: $geekColor;
+        background-color: transparent;
+        border-color: transparent;
+        font-family: "Microsoft YaHei";
+        font-size: 14px;
+    }
+
+    ::v-deep.el-input__inner:focus,
+    ::v-deep.el-input__inner:active,
+    ::v-deep.el-input__inner:hover{
+        background-color: $inputColor;
+        border-color: $geekColor;
+        color: $geekSecondaryColor;
+    }
+}

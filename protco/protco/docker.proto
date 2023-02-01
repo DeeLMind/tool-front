@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+// 一定要加，避免编译错误
+option go_package = "/proto";
+
+package docker;
+
+message DockerStart {
+    string id = 1;
+    string type = 2;
+}
+
+message DockerStop {
+    string id = 1;
+}

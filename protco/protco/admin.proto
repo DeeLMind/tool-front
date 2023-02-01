@@ -1,0 +1,163 @@
+syntax = "proto3";
+
+// 一定要加，避免编译错误
+option go_package = "/proto";
+
+package admin;
+
+// ctf题目管理
+message SysCtfGetTopicInfo{
+    string type = 1;            //题目类型web、pwn、rev、misc
+    uint32 pageSize = 2;        //每页显示的项数
+    uint32 currentPage = 3;     //当前选中页面 
+}
+
+message SysCtfDeleteTopic{
+    string type = 1;
+    repeated string id = 2;
+}
+
+message SysCtfCreateTopic{
+    string title = 1;
+    string desc = 2;
+    uint32 score = 3;
+    uint32 time = 4;
+    uint32 overTime = 5;
+    string flag = 6;
+    string url = 7;
+    string image = 8;
+    string type = 9;        //题目类型
+}
+
+message SysCtfUpdateTopic{
+    string title = 1;
+    string desc = 2;
+    uint32 score = 3;
+    uint32 time = 4;
+    uint32 overTime = 5;
+    string flag = 6;
+    string url = 7;
+    string image = 8;
+    string id = 9;
+    string type = 10;        //题目类型
+}
+
+// cve题目管理
+message SysCveGetTopicInfo{
+    string type = 1;            //题目类型main，wordpress
+    uint32 pageSize = 2;        //每页显示的项数
+    uint32 currentPage = 3;     //当前选中页面 
+}
+
+message SysCveDeleteTopic{
+    string type = 1;
+    repeated string id = 2;
+}
+
+message SysCveCreateTopic{
+    string title = 1;
+    string desc = 2;
+    uint32 time = 3;
+    uint32 overTime = 4;
+    string image = 5;
+    string type = 6;        //题目类型
+}
+
+message SysCveUpdateTopic{
+    string title = 1;
+    string desc = 2;
+    uint32 time = 3;
+    uint32 overTime = 4;
+    string image = 5;
+    string id = 6;
+    string type = 7;        //题目类型
+}
+
+// labs题目管理
+message SysLabsGetTopicInfo{
+    string type = 1;            //题目类型sqli、xss
+    uint32 pageSize = 2;        //每页显示的项数
+    uint32 currentPage = 3;     //当前选中页面 
+}
+
+message SysLabsDeleteTopic{
+    string type = 1;
+    repeated string id = 2;
+}
+
+message SysLabsCreateTopic{
+    string title = 1;
+    string desc = 2;
+    uint32 time = 3;
+    uint32 overTime = 4;
+    string image = 5;
+    string type = 6;        //题目类型
+}
+
+message SysLabsUpdateTopic{
+    string title = 1;
+    string desc = 2;
+    uint32 time = 3;
+    uint32 overTime = 4;
+    string image = 5;
+    string id = 6;
+    string type = 7;        //题目类型
+}
+
+// 用户管理
+message SysUserCreateUser{
+    string username = 1;
+    string password = 2;
+    string email = 3;
+    string role = 4;
+    uint64 score = 5;
+    bool active = 6;
+}
+
+message SysUserUpdateUser{
+    string id = 1;
+    string username = 2;
+    string password = 3;
+    string email = 4;
+    string role = 5;
+    uint64 score = 6;
+    bool active = 7;
+}
+
+message SysUserSearchUser{
+    uint32 pageSize = 1;        //每页显示的项数
+    uint32 currentPage = 2;     //当前选中页面 
+    string role = 3;
+    string startTime = 4;
+    string endTime = 5;
+    uint64 minScore = 6;
+    uint64 maxScore = 7;
+    string active = 8;
+    string userEmail = 9;
+}
+
+message SysUserDeleteUser{
+    repeated string id = 1;
+}
+
+message SysUserGetUserInfo{
+    uint32 pageSize = 1;        //每页显示的项数
+    uint32 currentPage = 2;     //当前选中页面 
+}
+
+message SysUserGetUserTasksInfo{
+    string email = 1;
+    uint32 pageSize = 2;        //每页显示的项数
+    uint32 currentPage = 3;     //当前选中页面 
+}
+
+message SysUserDeleteTasks{
+    string email = 1;
+    repeated string id = 2;
+}
+
+message SysUserGetUserTaskOverInfo{
+    string email = 1;
+    uint32 pageSize = 2;        //每页显示的项数
+    uint32 currentPage = 3;     //当前选中页面 
+}

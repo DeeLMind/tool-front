@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+// 一定要加，避免编译错误
+option go_package = "/proto";
+
+package labs;
+
+message LabsGetTopicInfo {
+    string type = 1;    // labs类型
+}
+
+message LabsGetOneTopicInfo{
+    string id = 1;
+}

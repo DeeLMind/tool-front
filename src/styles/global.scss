@@ -1,0 +1,75 @@
+@import "./variables.scss";
+
+// feat(QKSword)：等待加载样式
+.el-loading-mask {
+  background-color: rgba(30, 30, 30, 0.9);
+  .el-loading-spinner {
+    width: 162px;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 14px 0;
+    background: transparent;
+    border-radius: 8px;
+    box-sizing: border-box;
+    .el-loading-text {
+      margin-top: 14px;
+      font-size: 14px;
+      color: #fe6d32;
+      font-weight: 600;
+    }
+  }
+
+  .el-loading-spinner i {
+    &::before { display: none; }
+    width: 40px;
+    height: 40px;
+    background: #fe6d32;
+    background-size: 100% 100%;
+  }
+}
+
+
+// feat(QKSword):el messagebox信息暗黑样式
+.dark-msgbox{
+    width: 300PX;
+    border-color: $mainColor;
+    background-color: $mainColor;
+  
+    .el-message-box__header{
+      .el-message-box__title{
+        color: rgb(255, 255, 255);
+      }
+    }
+  
+    .el-message-box__content{
+      color: $fontColor;
+    }
+  
+    .el-message-box__btns{
+      .el-button{
+        background-color: $geekColor;
+        border-color: $geekColor;
+        color: black;
+      }
+  
+      .el-button:active{
+          border-color: $mainColor;
+      }
+
+      .el-button--primary{
+        background-color: $geekColor;
+        border-color: $geekColor;
+        color: black;
+      }
+  
+      .el-button--primary:active{
+          border-color: $mainColor;
+      }
+    }
+  }
+
+// feat(QKSword):el message信息暗黑样式
+.geekMsg{
+    border-color: #000000;
+    background-color: #1e1e1e;  
+}

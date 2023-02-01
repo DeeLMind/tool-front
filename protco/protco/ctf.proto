@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+// 一定要加，避免编译错误
+option go_package = "/proto";
+
+package ctf;
+
+message CtfFlag{
+    string id = 1;      // 题目id
+    string type = 2;    // 题目类型rev/web
+    string flag = 3;    // 题目flag
+}
+
+message CtfGetRevOne {
+    string id = 1;
+}
+
+message CtfGetWebOne{
+    string id = 1;
+}
+
+message CtfGetPwnOne{
+    string id = 1;
+}
+
+message CtfGetMiscOne{
+    string id = 1;
+}

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+// 一定要加，避免编译错误
+option go_package = "/proto";
+
+package user;
+
+message UserUserLogin {
+  string email = 1;
+  string password = 2;
+  string image_code = 3;   //图片验证码
+  string image_id = 4;     //图片验证码id
+  string mouse = 5;        //鼠标轨迹
+}
+
+message UserUserLogout {
+  string mouse = 1;       //鼠标轨迹
+}
+
+message UserUpdateAvatar {
+  string avatar = 1;
+}
+
+message UserGetTaskOne{
+  string id = 1;
+}

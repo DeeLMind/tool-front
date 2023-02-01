@@ -1,0 +1,22 @@
+@import "./variables.scss";
+
+//导入按钮
+@import "./btn.scss";
+
+//导入ui基本样式
+@import './ui.scss';
+
+.components-container {
+    position: relative;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    background-color: $mainColor;
+    border-top: 2px solid rgba($geekColor,0.1);
+}
+
+.pattern-box-wrapper{
+  position: relative;
+  height: 100%;
+}

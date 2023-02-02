@@ -7,17 +7,6 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-// 获取配置环境
-var proxyIp = ''
-if (process.env.NODE_ENV === 'lserver') {
-  proxyIp = 'http://127.0.0.1:80/'
-  // proxyIp = 'https://192.168.199.129:443/'
-}
-
-if (process.env.NODE_ENV === 'rserver') {
-  proxyIp = 'http://47.107.28.64/v1'
-}
-
 // 默认网站Title，标题，如果defaultSetting没有设置，则为極客方舟
 const name = defaultSettings.title || '極客方舟'
 
@@ -30,7 +19,6 @@ module.exports = {
   assetsDir: 'static',
   productionSourceMap: false,
   devServer: {
-    proxy: proxyIp,
     port: port,
     open: true,
     overlay: {

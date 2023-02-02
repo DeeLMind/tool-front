@@ -74,6 +74,8 @@ npm run build:prod 发布测试（提交dev分支前先打包测试）
 
 # TODO LIST
 
+* 进制转换
+
 * 随机密码生成
 
 ```
@@ -84,3 +86,7 @@ npm run build:prod 发布测试（提交dev分支前先打包测试）
 * IP 地址转换
 
 * 时间戳转换
+
+* crontab执行时间计算
+
+* 二维码操作

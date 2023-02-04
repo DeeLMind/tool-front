@@ -87,6 +87,25 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/tool',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'tool',
+    meta: {
+      title: '进制转换',
+      icon: 'hash',
+      roles: ['guest', 'admin', 'user']
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/tool/bin'),
+        name: 'Normal',
+        meta: { title: '进制转换', noCache: true, keepAlive: true }
+      }
+    ]
+  },
+  {
     path: '/hash',
     component: Layout,
     redirect: 'noRedirect',

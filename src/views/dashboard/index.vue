@@ -7,14 +7,18 @@
  * @FilePath: \gkattack-front\src\views\dashboard\index.vue
  -->
 <template>
-  <div>
-  </div>
+  <div />
 </template>
 
 <script>
 
 export default {
-  name: 'Dashboard'
+  name: 'Dashboard',
+  data() {
+    return {
+      input: ''
+    }
+  }
 }
 </script>
 

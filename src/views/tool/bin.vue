@@ -1,410 +1,189 @@
+<!-- eslint-disable no-constant-condition -->
+<!--
+ * @Author: QKSword 1064615639@qq.com
+ * @Date: 2023-02-05 15:40:34
+ * @LastEditors: QKSword 1064615639@qq.com
+ * @LastEditTime: 2023-02-07 16:48:33
+ * @FilePath: \tool-front\src\views\tool\bin.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div class="components-container">
     <div class="textarea-group">
-      <HashItem>
+      <BinItem>
         <template #spanName>二进制</template>
         <template #para>
           <StringCopy v-model="binCopyData" />
         </template>
         <template #result>
-          <ItemResult v-model="binResult" />
+          <el-input v-model="binResult" type="textarea" :rows="3" @input="(val) => {inputChange(val, 2)}" />
         </template>
-      </HashItem>
-      <HashItem>
+      </BinItem>
+      <BinItem>
         <template #spanName>八进制</template>
         <template #para>
           <StringCopy v-model="otcCopyData" />
         </template>
         <template #result>
-          <ItemResult v-model="otcResult" />
+          <el-input v-model="otcResult" type="textarea" :rows="3" @input="(val) => {inputChange(val, 8)}" />
         </template>
-      </HashItem>
+      </BinItem>
     </div>
     <div class="textarea-group">
-      <HashItem>
+      <BinItem>
         <template #spanName>十进制</template>
         <template #para>
           <StringCopy v-model="decCopyData" />
         </template>
         <template #result>
-          <ItemResult v-model="decResult" />
+          <el-input v-model="decResult" type="textarea" :rows="3" @input="(val) => {inputChange(val, 10)}" />
         </template>
-      </HashItem>
-      <HashItem>
+      </BinItem>
+      <BinItem>
         <template #spanName>十六进制</template>
         <template #para>
           <StringCopy v-model="dexCopyData" />
         </template>
         <template #result>
-          <ItemResult v-model="dexResult" />
+          <el-input v-model="dexResult" type="textarea" :rows="3" @input="(val) => {inputChange(val, 16)}" />
         </template>
-      </HashItem>
+      </BinItem>
     </div>
     <div class="textarea-group">
-      <HashItem>
+      <BinItem>
         <template #spanName>任意进制</template>
         <template #para>
           <div class="hashitem-para-group">
             <label class="base-label">进制数</label>
-            <div class="hashitem-para-group">
-              <el-input v-model="numberAlphabet" class="dark-para-el-input" size="small" @input="base64Calc" />
-            </div>
+            <el-input-number v-model="random1Num" class="dark-el-input-number" size="small" controls-position="right" :min="2" :max="62" :step="1" @change="(val) => {inputChange(random1Result, val)}" />
           </div>
-          <StringCopy v-model="numberCopyData" />
+          <StringCopy v-model="random1CopyData" />
         </template>
         <template #result>
-          <ItemResult v-model="numberResult" />
+          <el-input v-model="random1Result" type="textarea" :rows="3" @input="(val) => {inputChange(val, random1Num)}" />
         </template>
-      </HashItem>
+      </BinItem>
+      <BinItem>
+        <template #spanName>任意进制</template>
+        <template #para>
+          <div class="hashitem-para-group">
+            <label class="base-label">进制数</label>
+            <el-input-number v-model="random2Num" class="dark-el-input-number" size="small" controls-position="right" :min="2" :max="62" :step="1" @change="(val) => {inputChange(random2Result, val)}" />
+          </div>
+          <StringCopy v-model="random2CopyData" />
+        </template>
+        <template #result>
+          <el-input v-model="random2Result" type="textarea" :rows="3" @input="(val) => {inputChange(val, random2Num)}" />
+        </template>
+      </BinItem>
     </div>
   </div>
 </template>
 
 <script>
-import Base16Worker from 'workerize-loader!@/libs/hash/base16'
-import Base32Worker from 'workerize-loader!@/libs/hash/base32'
-import Base58Worker from 'workerize-loader!@/libs/hash/base58'
-import Base62Worker from 'workerize-loader!@/libs/hash/base62'
-import Base64Worker from 'workerize-loader!@/libs/hash/base64'
-import Base85Worker from 'workerize-loader!@/libs/hash/base85'
 
-import HashItem from '@/views/hash/components/hashItem.vue'
+import ConvertWorker from 'workerize-loader!@/libs/tool/convert'
+
+import BinItem from '@/views/tool/components/binItem.vue'
 import StringCopy from '@/components/ComonViews/stringCopy.vue'
-import ItemResult from '@/views/hash/components/itemResult.vue'
 
 export default {
   name: 'Base',
-  components: { HashItem, StringCopy, ItemResult },
+  components: { BinItem, StringCopy },
   data() {
     return {
-      fileBuffer: '', // 保存文件数据
-      clickButton: '', // 点击编码还是解码按钮
-      switchChange: 0, // 修改单个值时使用
-      picked: 'String', // 记录用户选择的是文件还是字符
-      inputString: '', // 用户输入待操作的字符
-      base16Alphabet: '0-9A-F',
-      base16Result: '',
-      base16CopyData: '',
-      base32Alphabet: 'A-Z2-7=',
-      base32Result: '',
-      base32CopyData: '',
-      base58Selected: 'BitCoin',
-      base58Alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
-      base58Result: '',
-      base58CopyData: '',
-      base58Options: [
-        { label: 'BitCoin', value: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz' },
-        { label: 'Ripple', value: 'rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz' }
-      ],
-      base62Alphabet: '0-9A-Za-z',
-      base62Result: '',
-      base62CopyData: '',
-      base64Selected: 'Standard',
-      numberAlphabet: '20',
-      base64Result: '',
-      base64CopyData: '',
-      base64Options: [
-        { label: 'Standard', value: 'A-Za-z0-9+/=' },
-        { label: 'URL safe', value: 'A-Za-z0-9-_' },
-        { label: 'Filename safe', value: 'A-Za-z0-9+\\-=' },
-        { label: 'itoa64', value: './0-9A-Za-z=' },
-        { label: 'XML', value: 'A-Za-z0-9_.' },
-        { label: 'y64', value: 'A-Za-z0-9._-' },
-        { label: 'z64', value: '0-9a-zA-Z+/=' },
-        { label: 'Radix-64', value: '0-9A-Za-z+/=' },
-        { label: 'Uuencoding', value: ' -_' },
-        { label: 'Xxencoding', value: '+\\-0-9A-Za-z' },
-        { label: 'BinHex', value: '!-,-0-689@A-NP-VX-Z[`a-fh-mp-r' },
-        { label: 'ROT13', value: 'N-ZA-Mn-za-m0-9+/=' },
-        { label: 'UNIX crypt', value: './0-9A-Za-z' },
-        { label: 'Atom128', value: '/128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC' },
-        { label: 'Megan35', value: '3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5' },
-        { label: 'Zong22', value: 'ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2' },
-        { label: 'Hazz15', value: 'HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5' }
-      ],
-      base85Selected: 'Standard',
-      base85Alphabet: '!-u',
-      base85Result: '',
-      base85CopyData: '',
-      base85Options: [
-        { label: 'Standard', value: '!-u' },
-        { label: 'Z85(ZeroMQ)', value: '0-9a-zA-Z.\\-:+=^!/*?&<>()[]{}@%$#' },
-        { label: 'IPv6', value: '0-9A-Za-z!#$%&()*+\\-;<=>?@^_`{|}~' }
-      ]
+      binResult: '',
+      binCopyData: '',
+      otcResult: '',
+      otcCopyData: '',
+      decResult: '',
+      decCopyData: '',
+      dexResult: '',
+      dexCopyData: '',
+      random1Result: '',
+      random1CopyData: '',
+      random1Num: 32,
+      random2Result: '',
+      random2CopyData: '',
+      random2Num: 62
     }
   },
   methods: {
-    doCopy() {
-      this.$copyText(this.base16Result)
-    },
-    // 设置结果显示框
-    resetResult(string, number) {
-      switch (number) {
-        case 0:
-          this.base16Result = string
-          this.base32Result = string
-          this.base58Result = string
-          this.base62Result = string
-          this.base64Result = string
-          this.base85Result = string
-          break
-        case 1:
-          this.base16Result = string
-          break
-        case 2:
-          this.base32Result = string
-          break
-        case 3:
-          this.base58Result = string
-          break
-        case 4:
-          this.base62Result = string
-          break
-        case 5:
-          this.base64Result = string
-          break
-        case 6:
-          this.base85Result = string
-          break
-        default:
-          break
+    // feat(QKSword):输入响应
+    inputChange(data, srcb) {
+      // 检测输入是否合理
+      if (this.checkData(data, srcb) === false) {
+        return
       }
+      // 运算
+      this.calcWorker(data, srcb)
     },
-    // base16单独改变时触发
-    base16Calc() {
-      this.switchChange = 1
-      this.baseCalc()
-      this.switchChange = 0
-    },
-    base32Calc() {
-      this.switchChange = 2
-      this.baseCalc()
-      this.switchChange = 0
-    },
-    base58Change() {
-      this.base58Alphabet = this.base58Selected
-      this.base58Calc()
-    },
-    base58Calc() {
-      this.switchChange = 3
-      this.baseCalc()
-      this.switchChange = 0
-    },
-    base62Calc() {
-      this.switchChange = 4
-      this.baseCalc()
-      this.switchChange = 0
-    },
-    base64Change() {
-      this.base64Alphabet = this.base64Selected
-      this.base64Calc()
-    },
-    base64Calc() {
-      this.switchChange = 5
-      this.baseCalc()
-      this.switchChange = 0
-    },
-    base85Change() {
-      this.base85Alphabet = this.base85Selected
-      this.base85Calc()
-    },
-    base85Calc() {
-      this.switchChange = 6
-      this.baseCalc()
-      this.switchChange = 0
-    },
-    async encode(string, number) {
-      const base16 = Base16Worker()
-      const base32 = Base32Worker()
-      const base58 = Base58Worker()
-      const base62 = Base62Worker()
-      const base64 = Base64Worker()
-      const base85 = Base85Worker()
+    // feat(QKSword)：校验输入数据是否合理
+    checkData(data, srcb) {
+      var table = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-      const ifMax = string.length > 1 * 1024 * 1024
+      for (let i = 0; i < data.length; i++) {
+        const char = data.charAt(i)
+        var index = table.indexOf(char)
 
-      switch (number) {
-        case 0:
-          base32.Encode(string, this.base32Alphabet).then(res => {
-            this.base32CopyData = res
-            this.base32Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          base64.Encode(string, this.base64Alphabet).then(res => {
-            this.base64CopyData = res
-            this.base64Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          base16.Encode(string, this.base16Alphabet).then(res => {
-            this.base16CopyData = res
-            this.base16Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          base85.Encode(string, this.base85Alphabet).then(res => {
-            this.base85CopyData = res
-            this.base85Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          base58.Encode(string, this.base58Alphabet).then(res => {
-            this.base58CopyData = res
-            this.base58Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          base62.Encode(string, this.base62Alphabet).then(res => {
-            this.base62CopyData = res
-            this.base62Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        case 1:
-          base16.Encode(string, this.base16Alphabet).then(res => {
-            this.base16CopyData = res
-            this.base16Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        case 2:
-          base32.Encode(string, this.base32Alphabet).then(res => {
-            this.base32CopyData = res
-            this.base32Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        case 3:
-          base58.Encode(string, this.base58Alphabet).then(res => {
-            this.base58CopyData = res
-            this.base58Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        case 4:
-          base62.Encode(string, this.base62Alphabet).then(res => {
-            this.base62CopyData = res
-            this.base62Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        case 5:
-          base64.Encode(string, this.base64Alphabet).then(res => {
-            this.base64CopyData = res
-            this.base64Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        case 6:
-          base85.Encode(string, this.base85Alphabet).then(res => {
-            this.base85CopyData = res
-            this.base85Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        default:
-          break
-      }
-    },
-    async decode(string, number) {
-      const base16 = Base16Worker()
-      const base32 = Base32Worker()
-      const base58 = Base58Worker()
-      const base62 = Base62Worker()
-      const base64 = Base64Worker()
-      const base85 = Base85Worker()
-
-      const ifMax = string.length > 1 * 1024 * 1024
-
-      switch (number) {
-        case 0:
-          base32.Decode(string, this.base32Alphabet).then(res => {
-            this.base32CopyData = res
-            this.base32Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          base64.Decode(string, this.base64Alphabet).then(res => {
-            this.base64CopyData = res
-            this.base64Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          base16.Decode(string, this.base16Alphabet).then(res => {
-            this.base16CopyData = res
-            this.base16Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          base85.Decode(string, this.base85Alphabet).then(res => {
-            this.base85CopyData = res
-            this.base85Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          base58.Decode(string, this.base58Alphabet).then(res => {
-            this.base58CopyData = res
-            this.base58Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          base62.Decode(string, this.base62Alphabet).then(res => {
-            this.base62CopyData = res
-            this.base62Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        case 1:
-          base16.Decode(string, this.base16Alphabet).then(res => {
-            this.base16CopyData = res
-            this.base16Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        case 2:
-          base32.Decode(string, this.base32Alphabet).then(res => {
-            this.base32CopyData = res
-            this.base32Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        case 3:
-          base58.Decode(string, this.base58Alphabet).then(res => {
-            this.base58CopyData = res
-            this.base58Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        case 4:
-          base62.Decode(string, this.base62Alphabet).then(res => {
-            this.base62CopyData = res
-            this.base62Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        case 5:
-          base64.Decode(string, this.base64Alphabet).then(res => {
-            this.base64CopyData = res
-            this.base64Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        case 6:
-          base85.Decode(string, this.base85Alphabet).then(res => {
-            this.base85CopyData = res
-            this.base85Result = ifMax ? '计算完毕，字符过长，请复制值进行查看' : res
-          })
-          break
-        default:
-          break
-      }
-    },
-    // 进行base计算总入口
-    baseCalc() {
-      if (this.clickButton === 'clickEncode') {
-        if (this.picked === 'String') {
-          this.encode(this.inputString, this.switchChange)
-        } else if (this.picked === 'File') {
-          if (this.fileBuffer.length !== 0) {
-            this.resetResult('手算中，请稍等....', this.switchChange)
-            this.encode(this.fileBuffer, this.switchChange)
-          }
-        }
-      } else if (this.clickButton === 'clickDecode') {
-        if (this.picked === 'String') {
-          this.decode(this.inputString, this.switchChange)
-        } else if (this.picked === 'File') {
-          if (this.fileBuffer.length !== 0) {
-            this.resetResult('手算中，请稍等....', this.switchChange)
-            this.decode(this.fileBuffer, this.switchChange)
-          }
+        if (index === -1 || index >= srcb) {
+          this.$message({
+            message: '输入错误的' + srcb + '进制数据',
+            type: 'error',
+            duration: 1.5 * 1000,
+            customClass: 'geekMsg' })
+          return false
         }
       }
+
+      return true
     },
-    // 点击编码按钮触发
-    clickEncode() {
-      this.clickButton = 'clickEncode'
-      this.baseCalc()
-    },
-    // 点击解码按钮触发
-    clickDecode() {
-      this.clickButton = 'clickDecode'
-      this.baseCalc()
+    // feat(QKSword)：调用worker运算结果
+    calcWorker(data, srcb) {
+      const convertWorker = ConvertWorker()
+
+      convertWorker.Convert(data, srcb, 2).then(res => {
+        this.binCopyData = this.binResult = res
+      })
+      convertWorker.Convert(data, srcb, 8).then(res => {
+        this.otcCopyData = this.otcResult = res
+      })
+      convertWorker.Convert(data, srcb, 10).then(res => {
+        this.decCopyData = this.decResult = res
+      })
+      convertWorker.Convert(data, srcb, 16).then(res => {
+        this.dexCopyData = this.dexResult = res
+      })
+      convertWorker.Convert(data, srcb, this.random1Num).then(res => {
+        this.random1CopyData = this.random1Result = res
+      })
+      convertWorker.Convert(data, srcb, this.random2Num).then(res => {
+        this.random2CopyData = this.random2Result = res
+      })
     }
   }
 }
 </script>
 
-  <style lang="scss" scoped>
-  @import "@/styles/app-main.scss";
+<style lang="scss" scoped>
+@import "@/styles/app-main.scss";
 
-  </style>
+.el-textarea{
+    ::v-deep.el-textarea__inner,
+    ::v-deep.el-textarea__inner:focus,
+    ::v-deep.el-textarea__inner:active,
+    ::v-deep.el-textarea__inner.hover{
+        resize: none;
+        width:100%;
+        background: transparent;
+        border-radius: 5px;
+        border: 1px solid rgba($geekColor,0.1);
+        outline: none;
+        color: $fontColor;
+        font-family: "Microsoft YaHei";
+        overflow-x:hidden;
+    }
+}
+
+</style>
 

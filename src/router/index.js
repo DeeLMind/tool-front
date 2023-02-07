@@ -1,7 +1,7 @@
 /*
  * @Author: DeeLMind
  * @Date: 2022-02-16 10:33:43
- * @LastEditTime: 2022-12-16 10:00:05
+ * @LastEditTime: 2023-02-07 17:09:48
  * @LastEditors: QKSword 1064615639@qq.com
  * @Description: 路由配置
  * @FilePath: \gkattack-front\src\router\index.js
@@ -93,7 +93,7 @@ export const constantRoutes = [
     name: 'tool',
     meta: {
       title: '进制转换',
-      icon: 'hash',
+      icon: 'ctf-pwn',
       roles: ['guest', 'admin', 'user']
     },
     children: [

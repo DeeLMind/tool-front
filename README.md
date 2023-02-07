@@ -24,7 +24,7 @@ npm run build:prod 发布测试（提交dev分支前先打包测试）
 * 如果已有功能在其基础上开发
 
 # 已有功能
-
+## 进制转换
 ## 常用编码
 * HEX
 * BASE64
@@ -73,8 +73,6 @@ npm run build:prod 发布测试（提交dev分支前先打包测试）
 ## JWT
 
 # TODO LIST
-
-* 进制转换
 
 * 随机密码生成
 

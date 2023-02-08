@@ -16,6 +16,7 @@ npm run build:prod 发布测试（提交dev分支前先打包测试）
 1. 开发测试，编写代码
 2. 主题风格符合本网站，代码规范，不要乱写，要条理清晰
 3. 只需提交dev分支即可（提交dev分支前先打包测试）
+4. dashboard展示与README已有功能一致
 
 # 开发思路
 
@@ -25,7 +26,8 @@ npm run build:prod 发布测试（提交dev分支前先打包测试）
 
 # 已有功能
 ## 进制转换
-## 常用编码
+## 编码解码
+### 常用编码
 * HEX
 * BASE64
 * URLENCODE
@@ -37,7 +39,7 @@ npm run build:prod 发布测试（提交dev分支前先打包测试）
 * SHA256
 * SHA512
 
-## CTF编码
+### CTF编码
 * JSFUNK
 * BRAINFUCK
 * 摩斯密码
@@ -46,7 +48,7 @@ npm run build:prod 发布测试（提交dev分支前先打包测试）
 * 栅栏密码
 * 凯撒密码
 
-## BASE系列
+### BASE系列
 * BASE16
 * BASE32
 * BASE58
@@ -54,7 +56,7 @@ npm run build:prod 发布测试（提交dev分支前先打包测试）
 * BASE64
 * BASE85
 
-## HASH系列
+### HASH系列
 * HAS160
 * MD2
 * MD4
@@ -70,7 +72,7 @@ npm run build:prod 发布测试（提交dev分支前先打包测试）
 * SM3
 * HMAC
 
-## JWT
+### JWT
 
 # TODO LIST
 

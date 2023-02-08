@@ -1,7 +1,7 @@
 /*
  * @Author: DeeLMind
  * @Date: 2022-02-16 10:33:43
- * @LastEditTime: 2022-12-16 10:00:05
+ * @LastEditTime: 2023-02-07 17:09:48
  * @LastEditors: QKSword 1064615639@qq.com
  * @Description: 路由配置
  * @FilePath: \gkattack-front\src\router\index.js
@@ -83,6 +83,25 @@ export const constantRoutes = [
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
         meta: { title: 'Dashboard', icon: 'dashboard', affix: true, keepAlive: true }
+      }
+    ]
+  },
+  {
+    path: '/tool',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'tool',
+    meta: {
+      title: '进制转换',
+      icon: 'ctf-pwn',
+      roles: ['guest', 'admin', 'user']
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/tool/bin'),
+        name: 'Normal',
+        meta: { title: '进制转换', noCache: true, keepAlive: true }
       }
     ]
   },
